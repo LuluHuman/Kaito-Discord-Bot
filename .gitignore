@@ -1,8 +1,11 @@
-# nodejs bs
-node_modules
+# Nodejs bs
+node_modules/
 package-lock.json
 
-#config bs
+# Config bs
 config/bot.json
+config/cmdIDs.json
 
-#lame database bs
+# Shit database bs
+userDB/
+db.json
