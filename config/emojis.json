@@ -1,0 +1,11 @@
+{
+    "play": "▶️",
+    "stop": "⏹️",
+    "queue": "📄",
+    "success": "✅",
+    "repeat": "🔁",
+    "error": "❌",
+    "warning": "⚠️",
+    "volume": "🔉",
+    "search": "🔍"
+}
