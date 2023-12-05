@@ -10,7 +10,7 @@ module.exports = {
         const client = interaction.client
         const _userId = interaction.user.id
         if (client.commandCooldown.has(`HIGHLOW,${_userId}`)) {
-            const cooldownleft = client.commandCooldown.get(`HIGHLOW,${_userId}`) + 10
+            const cooldownleft = client.commandCooldown.get(`HIGHLOW,${_userId}`) + 40
             interaction.reply({ content: `Please wait <t:${cooldownleft}:R> before doing highlow`, ephemeral: true })
             return
         }
