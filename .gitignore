@@ -1,1 +1,8 @@
+# nodejs bs
 node_modules
+package-lock.json
+
+#config bs
+config/bot.json
+
+#lame database bs
