@@ -1,12 +1,13 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { embed: { titleEmbed }, noQueue, musicControlls, musicControllsEmbed } = require('../../modules/messageHandler')
-
 const command = {}
 command.data = new SlashCommandBuilder().setName('shuffle').setDescription('shuffle the queue')
 command.execute = async (interaction, isButton) => {
     const client = interaction.client;
+    const { embed: { titleEmbed }, noQueue, musicControlls, musicControllsEmbed } = client.modules.tttModule
+
     const queue = client.distube.getQueue(interaction.guildId)
     if (noQueue(interaction)) return;
+    
     queue.shuffle().catch(err => interaction.client.handleError(interaction, err))
 
     if (!isButton) { interaction.reply({ embeds: [titleEmbed(client, "colorBG", "queue", `Queue Shuffled`)], ephemeral: true }).catch(err => interaction.client.handleError(interaction, err)) }

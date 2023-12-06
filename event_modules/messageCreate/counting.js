@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const { embed: { titleEmbed } } = require('../../modules/messageHandler')
 module.exports = async (client, message) => {
+    const { embed: { titleEmbed } } = client.modules.messageHandler
     if (message.channel.id !== "1176793581378351154") return
-    // message.channel.send({ embeds: [titleEmbed(client, "colorBG", "success", "I'M TAKING OVER NOW\nNext number: `1`")]});
+    
     const db = client.db.counting
     const curNum = await db.get("curNum")
     const lastUser = await db.get("lastUser")

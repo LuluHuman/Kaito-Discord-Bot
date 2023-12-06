@@ -1,15 +1,15 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { embed: { decideEmbed } } = require('../../modules/messageHandler')
-
 //.catch(err => interaction.client.handleError(interaction, err))
 const command = {}
 command.data = new SlashCommandBuilder()
-    .setName('iq')
-    .setDescription('Get your IQ')
-    .addUserOption(option => option.setName('user').setDescription('The user to get the IQ of'))
+.setName('iq')
+.setDescription('Get your IQ')
+.addUserOption(option => option.setName('user').setDescription('The user to get the IQ of'))
 
 command.execute = async (interaction) => {
     const client = interaction.client;
+    const { embed: { decideEmbed } } = client.modules.messageHandler
+    
     const user = interaction.options.getUser('user') || interaction.user;
     var embedText = "";
 

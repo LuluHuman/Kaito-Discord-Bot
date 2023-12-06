@@ -1,11 +1,12 @@
 const { SlashCommandBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, EmbedBuilder } = require('discord.js')
-const currencyPrefix = "<:_ammoutloon:1179609875664359454> "
 
 const command = {}
 command.data = new SlashCommandBuilder().setName('highlow').setDescription('Guess if a number is higher or ロウワー. if you win you get money ')
 command.cooldown = 40000
 command.execute = async (interaction) => {
     const client = interaction.client
+    const currencyPrefix = client.config.config_bot.currencyPrefix
+    
     const _userId = interaction.user.id
 
     const secret = client.random(0, 100)

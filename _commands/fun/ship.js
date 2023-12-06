@@ -1,5 +1,4 @@
 //Improvement of https://github.com/LuluHuman/MasonBot/blob/main/Mason-Bot/commands/fun/ship.js
-
 const { SlashCommandBuilder } = require('discord.js');
 const command = {}
 command.data = new SlashCommandBuilder().setName('ship').setDescription('ships users!!!')
@@ -7,7 +6,6 @@ command.data = new SlashCommandBuilder().setName('ship').setDescription('ships u
     .addUserOption(option => option.setName('user2').setDescription('The second user to ship').setRequired(true))
 
 command.execute = async (interaction) => {
-
     var user1 = interaction.options.getUser('user1');
     user1 = interaction.guild.members.cache.get(user1.id)
     var name1 = user1.nickname ? user1.nickname : user1.user.username;

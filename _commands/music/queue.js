@@ -1,10 +1,11 @@
 const { EmbedBuilder, SlashCommandBuilder } = require('discord.js')
-const { noQueue } = require('../../modules/messageHandler')
 
 const command = {}
 command.data = new SlashCommandBuilder().setName('queue').setDescription('See the queue')
 command.execute = async (interaction) => {
   const client = interaction.client
+  const { noQueue } = client.modules.tttModule
+
   const queue = client.distube.getQueue(interaction)
   if (noQueue(interaction)) return;
 

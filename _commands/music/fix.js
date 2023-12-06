@@ -1,11 +1,12 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { embed: { titleEmbed } } = require('../../modules/messageHandler')
 
 const command = {}
 command.data = new SlashCommandBuilder().setName('fix').setDescription('fix if not playing')
 command.execute = async (interaction) => {
     const guild = interaction.guild
     const client = interaction.client
+    
+    const { embed: { titleEmbed } } = client.modules.messageHandler
     const me = guild.members.cache.get(client.user.id)
     const fixVc = client.channels.cache.get(client.config.config_bot.fix_vc_id)
     const curVs = me.voice.channel

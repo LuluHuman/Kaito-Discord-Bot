@@ -1,5 +1,4 @@
 const { Events } = require('discord.js');
-const { embed: { titleEmbed } } = require('../modules/messageHandler')
 const event = {}
 event.name = Events.MessageDelete
 
@@ -7,9 +6,10 @@ event.execute = async (message) => {
     if (!message.author) return
     if (message.author.bot) return;
     const client = message.client;
+    const { embed: { titleEmbed } } = client.modules.messageHandler
 
     if (!(message.channel.id == "1176793581378351154")) return
-    const curNum = client.db.counting.get("curNum")
+    const curNum = await client.db.counting.get("curNum")
 
     const lastNum = parseInt(message.content);
     if (lastNum == curNum - 1) {

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ApplicationCommandType, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 const command = {}
 command.data = new SlashCommandBuilder().setName('avatar').setDescription('get it')

@@ -1,11 +1,12 @@
 const fs = require('fs');
-const { embed: { titleEmbed }, musicControlls } = require('../modules/messageHandler')
 const { Events, ActivityType } = require('discord.js');
+
 const event = {}
 event.name = Events.ClientReady
 event.once = true
-
 event.execute = async (client) => {
+    const { embed: { titleEmbed }, musicControlls } = client.modules.messageHandler
+    
     console.clear()
     console.log(`[INFO] Logged in as ${client.user.tag}!`);
 

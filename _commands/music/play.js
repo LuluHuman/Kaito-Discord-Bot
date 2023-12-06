@@ -1,6 +1,5 @@
 const ytsr = require('@distube/ytsr');
 const { SlashCommandBuilder } = require('discord.js')
-const { embed: { titleEmbed } } = require('../../modules/messageHandler')
 
 const command = {}
 command.data = new SlashCommandBuilder().setName('play').setDescription('Play a song')
@@ -13,8 +12,9 @@ command.data = new SlashCommandBuilder().setName('play').setDescription('Play a 
 
 command.execute = async (interaction) => {
   await interaction.deferReply()
-
   const client = interaction.client;
+  const { embed: { titleEmbed } } = client.modules.tttModule
+
   const keyword = interaction.options.getString("song");
   const queue = await client.distube.getQueue(interaction);
   const voiceChannel = interaction.member.voice.channel;

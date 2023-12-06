@@ -1,10 +1,11 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { embed: { titleEmbed } } = require('../../modules/messageHandler')
 
 const command = {}
 command.data = new SlashCommandBuilder().setName('join').setDescription('Join a voice channel')
 command.execute = async (interaction) => {
   const client = interaction.client
+  const { embed: { titleEmbed } } = client.modules.messageHandler
+
   const voiceChannel = interaction.member.voice.channel;
 
   if (!voiceChannel) {

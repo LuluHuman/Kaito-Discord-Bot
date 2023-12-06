@@ -1,10 +1,11 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { embed: { songinfoEmbed }, noQueue } = require('../../modules/messageHandler')
 
 const command = {}
 command.data = new SlashCommandBuilder().setName('nowplaying').setDescription('Show the current playing song')
 command.execute = async (interaction) => {
   const client = interaction.client;
+  const { embed: { songinfoEmbed }, noQueue } = client.modules.tttModule
+  
   const queue = client.distube.getQueue(interaction)
   if (noQueue(interaction)) return;
 

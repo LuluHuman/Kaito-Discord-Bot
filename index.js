@@ -26,6 +26,16 @@ client.config = {}
 client.config.config_bot = require("./config/bot.json")
 client.config.color = require("./config/color_config.json")
 client.config.emojis = require("./config/emojis.json")
+client.config.begResponses = require("./config/begResponses.json")
+client.config.names = require("./config/econNames.json")
+
+//? Modules
+client.modules = {}
+client.modules.akiHandler = require("./modules/aki")
+client.modules.messageHandler = require("./modules/messageHandler")
+client.modules.reddit = require("./modules/reddit")
+client.modules.tttModule = require("./modules/tictactoe")
+
 
 //? Database
 client.db = require("./modules/db")

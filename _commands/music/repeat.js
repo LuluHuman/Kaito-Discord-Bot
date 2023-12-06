@@ -1,6 +1,4 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { embed: { titleEmbed }, noQueue, musicControlls, musicControllsEmbed } = require('../../modules/messageHandler')
-
 const command = {}
 command.data = new SlashCommandBuilder().setName('repeat').setDescription('Set the repeat mode of the queue')
   .addStringOption(option =>
@@ -14,6 +12,8 @@ command.data = new SlashCommandBuilder().setName('repeat').setDescription('Set t
       ))
 command.execute = async (interaction) => {
   const client = interaction.client
+  const { embed: { titleEmbed }, noQueue, musicControlls, musicControllsEmbed } = client.modules.tttModule
+
   const queue = client.distube.getQueue(interaction)
   if (noQueue(interaction)) return;
 

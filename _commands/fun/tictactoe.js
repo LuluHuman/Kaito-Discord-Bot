@@ -1,12 +1,13 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const tttModule = require("./../../modules/tictactoe")
 
 const command = {}
 command.data = new SlashCommandBuilder().setName('tic-tac-toe').setDescription('plae tic-tac-toe')
-    .addUserOption(option => option.setName('user').setDescription('Who you want to play with').setRequired(true))
+.addUserOption(option => option.setName('user').setDescription('Who you want to play with').setRequired(true))
 
 command.execute = async (interaction) => {
     const client = interaction.client
+    const tttModule = client.modules.tttModule
+    
     const user = interaction.options.getUser('user');
     const optionRow = tttModule.optionRow()
 

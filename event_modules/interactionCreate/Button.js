@@ -1,9 +1,7 @@
-const akiHandler = require("../../modules/aki")
-// const wait = require('node:timers/promises').setTimeout;
-
 module.exports = async (interaction) => {
     if (!interaction.isButton()) return
     const client = interaction.client;
+    const akiHandler = client.modules.akiHandler
 
     switch (interaction.customId) {
         //Music Player
@@ -50,7 +48,6 @@ module.exports = async (interaction) => {
         case "probaki":
         case "probnotaki": {
             await interaction.deferUpdate().catch(err => interaction.client.handleError(interaction, err))
-
             akiHandler.step(interaction)
             break
         }

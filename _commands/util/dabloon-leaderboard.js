@@ -2,12 +2,12 @@ const fs = require("fs")
 const path = require("path")
 const { SlashCommandBuilder } = require('discord.js')
 const { EmbedBuilder } = require('discord.js');
-const currencyPrefix = "<:_ammoutloon:1179609875664359454> "
 
 const command = {}
 command.data = new SlashCommandBuilder().setName('dabloon-leaderboard').setDescription('who\s topping with dabloons')
 command.execute = async (interaction) => {
     const client = interaction.client
+    const currencyPrefix = client.config.config_bot.currencyPrefix
 
     const userDir = path.join(__dirname, `../../userDB`)
     const users = await fs.readdirSync(userDir)

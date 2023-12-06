@@ -1,18 +1,16 @@
 const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 
-const begResponses = require("./../../config/begResponses.json")
-const names = require("./../../config/econNames.json")
-
 const command = {}
 command.data = new SlashCommandBuilder().setName('beg').setDescription('beg someone for something')
 command.cooldown = 10000
 
 command.execute = async (interaction) => {
     const client = interaction.client
+    const begResponses = client.config.begResponses
+    const names = client.config.names
     const currencyPrefix = client.config.config_bot.currencyPrefix
 
     const user = interaction.options.getUser('user') || interaction.user
-
     const bal = await client.db.user.get(user.id, "balance", { wallet: 0, bank: 0 })
 
     const _chance = Math.floor(Math.random() * (2)) + 1

@@ -1,15 +1,16 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { embed: { titleEmbed }, musicControlls, noQueue, musicControllsEmbed } = require('../../modules/messageHandler')
 
 const command = {}
 command.data = new SlashCommandBuilder().setName('volume').setDescription('Change volume of currently playing song')
-  .addIntegerOption(option => option.setName('volume').setDescription('Volume to set').setRequired(true))
+.addIntegerOption(option => option.setName('volume').setDescription('Volume to set').setRequired(true))
 
 command.execute = async (interaction) => {
-  if (noQueue(interaction)) return;
-
   const client = interaction.client
+  const { embed: { titleEmbed }, musicControlls, noQueue, musicControllsEmbed } = client.modules.tttModule
+  
   const queue = client.distube.getQueue(interaction)
+  if (noQueue(interaction)) return;
+  
   const volume = interaction.options.getInteger('volume')
   queue.setVolume(volume)
 

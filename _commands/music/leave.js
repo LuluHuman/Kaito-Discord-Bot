@@ -1,10 +1,11 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { embed: { titleEmbed }, musicControlls } = require('../../modules/messageHandler')
 
 const command = {}
 command.data = new SlashCommandBuilder().setName('leave').setDescription('Go out of the Country(voice channel)')
 command.execute = async (interaction) => {
     const client = interaction.client
+    const { embed: { titleEmbed }, musicControlls } = client.modules.tttModule
+    
     client.distube.voices.leave(interaction)
 
     const embed = titleEmbed(client, "colorSuccess", "success", "Left voice channel")
