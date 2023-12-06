@@ -1,11 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js')
-module.exports = {
-    inVoiceChannel: true,
-    data: new SlashCommandBuilder()
-        .setName('aww')
-        .setDescription('Get aww'),
-    async execute(interaction) {
-        
-        interaction.reply("Diabled cos gay").catch(err => require('../../modules/handleError')(interaction, err))
-    }
-}
+
+const command = {}
+command.data = new SlashCommandBuilder().setName('aww').setDescription('Get aww')
+command.execute = async (interaction) => interaction.reply("Diabled cos gay").catch(err => interaction.client.handleError(interaction, err))
+module.exports = command

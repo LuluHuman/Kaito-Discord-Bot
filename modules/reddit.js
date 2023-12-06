@@ -14,7 +14,7 @@ exports.memeEmbed = async (client, sub, interaction) => {
         ]
     }
     const subr = subreddits[sub][Math.floor(Math.random() * subreddits[sub].length)]
-    const { data } = await axios.get(`https://www.reddit.com/r/${subr}.json?limit=500&count=500`).catch(err => require('./handleError')(interaction, err))
+    const { data } = await axios.get(`https://www.reddit.com/r/${subr}.json?limit=500&count=500`).catch(err => interaction.client.handleError(interaction, err))
     const randNO = Math.floor(Math.random() * data.data.children.length)
 
     var post = data.data.children[randNO].data
@@ -40,11 +40,11 @@ exports.onButtonInteraction = async (interaction) => {
     const { ActionRowBuilder } = require('discord.js');
 
     const client = interaction.client
-    interaction.deferReply().catch(err => require('../modules/handleError')(interaction, err))
+    interaction.deferReply().catch(err => interaction.client.handleError(interaction, err))
     const embed = await exports.memeEmbed(client, "memes", interaction)
     const morememes = require("../modules/messageHandler").buttons.createBasic("morememes", "More Memes", "Success")
     const row = new ActionRowBuilder().addComponents(morememes);
-    interaction.editReply({ embeds: [embed], components: [row] }).catch(err => require('./handleError')(interaction, err))
-    interaction.message.edit({ components: [] }).catch(err => require('./handleError')(interaction, err))
+    interaction.editReply({ embeds: [embed], components: [row] }).catch(err => interaction.client.handleError(interaction, err))
+    interaction.message.edit({ components: [] }).catch(err => interaction.client.handleError(interaction, err))
     return
 }

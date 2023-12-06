@@ -32,8 +32,8 @@ exports.embed.songinfoEmbed = function ({ source, name, formattedDuration, url, 
         .setColor(source === 'youtube' ? '#FF0000' : '#F26F23')
         .setTitle(`${addQueue ? 'Added song to queue' : 'Now Playing'}: ${name}`)
         .setDescription(
-            `Requested by: ${user}` +
-            `⏳ ${formattedDuration} / ${queue.formattedCurrentTime}` +
+            `Requested by: ${user}\n\n` +
+            `⏳ ${formattedDuration} / ${queue.formattedCurrentTime}\n` +
             `🔉 ${queue.volume}%  |  🔁 ${queue.repeatMode ? (queue.repeatMode === 2 ? 'All Queue' : 'This Song') : 'Off'}`
         )
         .setURL(url)
@@ -52,7 +52,7 @@ exports.embed.playlistinfoEmbed = function (playlist, queue, addQueue) {
         .setThumbnail(playlist.thumbnail)
         .addFields(
             { name: '🎵Songs', value: String(playlist.songs.length), inline: true },
-            { name: '⚠️Warning', value: "Playlist converted from Spotify to Youtube. May contain outros" },
+            { name: '⚠️Warning', value: "Playlist converted from Spotify to Youtube. Im gay - Kaito" },
         )
         .addFields(
             { name: '🔉Volume', value: queue.volume + "%", inline: true },
@@ -96,19 +96,18 @@ exports.musicControlls = function (client, embed) {
     messges.then(msg => msg.edit({ embeds: [embed], content: `` }))
 }
 
-exports.musicControllsEmbed = function ({ source, name, formattedDuration, url, thumbnail, views, uploader, user, duration }, queue, addQueue) {
-
+exports.musicControllsEmbed = function ({ source, name, formattedDuration, url, thumbnail, uploader, user }, queue) {
     const embed = new EmbedBuilder()
         .setColor(source === 'youtube' ? '#FF0000' : '#F26F23')
         .setTitle(`Now Playing:\n${name}`)
         .setDescription(
-            `Requested by: ${user}` +
-            `⏳ ${formattedDuration} / ${queue.formattedCurrentTime}` +
+            `Requested by: ${user}\n\n` +
+            `⏳ ${formattedDuration} / ${queue.formattedCurrentTime}\n` +
             `🔉 ${queue.volume}%  |  🔁 ${queue.repeatMode ? (queue.repeatMode === 2 ? 'All Queue' : 'This Song') : 'Off'}`
         )
         .setURL(url)
         .setAuthor({ name: uploader.name, url: uploader.url })
-        .addFields({ name: '📄Up next', value: "* " + queue.songs[1] ? queue.songs[1].name : 'No more songs in queue', inline: false })
+        .addFields({ name: '📄Up next', value: "* " +( queue.songs[1] ? queue.songs[1].name : 'No more songs in queue'), inline: false })
         .setImage(thumbnail)
         .setTimestamp()
     return embed

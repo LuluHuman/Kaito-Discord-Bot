@@ -17,7 +17,7 @@ exports.newGame = async (interaction) => {
     if (client.akigames.has(interaction.user.id)) { return interaction.reply({ content: "You are already playing a game bodoh", ephemeral: true }) }
 
     const loading = this.qnsEmbed(client, "Think of a charactar (Loading...)", interaction.user, null)
-    await interaction.reply({ embeds: [loading] }).catch(err => require('./handleError')(interaction, err))
+    await interaction.reply({ embeds: [loading] }).catch(err => interaction.client.handleError(interaction, err))
 
     // Load game
     const aki = new Aki({ region: 'en' });
@@ -34,14 +34,14 @@ exports.newGame = async (interaction) => {
 
     try { await response.awaitMessageComponent({ filter: collectorFilter, time: 300000 }); }
     catch (e) {
-        await interaction.editReply({ content: "Timeout", components: [] }).catch(err => require('./handleError')(interaction, err))
+        await interaction.editReply({ content: "Timeout", components: [] }).catch(err => interaction.client.handleError(interaction, err))
         client.akigames.delete(interaction.user.id)
     }
 }
 
 exports.result = async (interaction, aki, message) => {
     const client = interaction.client
-    await aki.win().catch(err => require('./handleError')(interaction, err))
+    await aki.win().catch(err => interaction.client.handleError(interaction, err))
 
     const restart = require("./messageHandler").buttons.createBasic("restartaki", "Restart", "Primary")
     const row = new ActionRowBuilder().addComponents(restart);
@@ -52,7 +52,7 @@ exports.result = async (interaction, aki, message) => {
         .setColor(client.config.color.aki)
         .setImage(aki.answers[0].absolute_picture_path)
         .setAuthor({ "name": interaction.user.username, "iconURL": interaction.user.avatarURL() })
-    message.editReply({ embeds: [embed], components: [row] }).catch(err => require('./handleError')(interaction, err))
+    message.editReply({ embeds: [embed], components: [row] }).catch(err => interaction.client.handleError(interaction, err))
     client.akigames.delete(interaction.user.id)
 }
 exports.step = async (interaction) => {
@@ -60,7 +60,7 @@ exports.step = async (interaction) => {
     const response = refTable[interaction.customId]
 
     const client = interaction.client
-    
+
     if (!client.akigames.get(interaction.user.id)) return interaction.followUp({ content: "You are not playing anything", ephemeral: true })
     const { aki, message } = client.akigames.get(interaction.user.id)
 
@@ -72,16 +72,16 @@ exports.step = async (interaction) => {
 
     const drow = this.akiButton(true)
     const drow2 = this.akiButton2()
-    await message.editReply({ components: [drow, drow2] }).catch(err => require('./handleError')(interaction, err))
+    await message.editReply({ components: [drow, drow2] }).catch(err => interaction.client.handleError(interaction, err))
 
-    await aki.step(response).catch(err => require('./handleError')(interaction, err))
+    await aki.step(response).catch(err => interaction.client.handleError(interaction, err))
     if (aki.progress >= 80 || aki.currentStep >= 78) { return await exports.result(interaction, aki, message) }
 
     const row = this.akiButton()
     const row2 = this.akiButton2()
     const embedyes = this.qnsEmbed(client, aki.question, interaction.user, { text: `Question ${aki.currentStep} | Progression: ${Math.floor(aki.progress)}% ` })
 
-    await message.editReply({ embeds: [embedyes], components: [row, row2] }).catch(err => require('./handleError')(interaction, err))
+    await message.editReply({ embeds: [embedyes], components: [row, row2] }).catch(err => interaction.client.handleError(interaction, err))
 }
 exports.end = async (interaction) => {
     const client = interaction.client;
@@ -99,7 +99,7 @@ exports.end = async (interaction) => {
         .setImage(this.randomAkitude())
         .setAuthor({ "name": interaction.user.username, "iconURL": interaction.user.avatarURL() })
     client.akigames.delete(interaction.user.id)
-    interaction.message.edit({ embeds: [embed], components: [row] }).catch(err => require('./handleError')(interaction, err))
+    interaction.message.edit({ embeds: [embed], components: [row] }).catch(err => interaction.client.handleError(interaction, err))
 }
 
 this.randomAkitude = () => {

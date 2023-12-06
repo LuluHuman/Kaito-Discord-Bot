@@ -1,13 +1,13 @@
 module.exports = async (interaction) => {
     await interaction.deferReply()
-        .catch(err => require('../modules/handleError')(interaction, err))
+        .catch(err => interaction.client.handleError(interaction, err))
 
     const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
     const { get } = require('axios');
 
-    const res = await get(`https://api.truthordarebot.xyz/api/paranoia`).catch(err => require('./handleError')(interaction, err))
+    const res = await get(`https://api.truthordarebot.xyz/api/paranoia`).catch(err => interaction.client.handleError(interaction, err))
     if (!res) {
-        require('./handleError')(interaction, "res = undefined in paranoia.js")
+        interaction.client.handleError(interaction, "res = undefined in paranoia.js")
     }
     const embed = new EmbedBuilder()
         .setAuthor({ name: 'Requested by: ' + interaction.user.username, iconURL: interaction.user.avatarURL() })
@@ -30,5 +30,5 @@ module.exports = async (interaction) => {
 
 
     interaction.editReply({ embeds: [embed], components: [row] })
-        .catch(err => require('./handleError')(interaction, err))
+        .catch(err => interaction.client.handleError(interaction, err))
 }

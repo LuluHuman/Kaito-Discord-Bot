@@ -1,19 +1,27 @@
 const { Events } = require('discord.js');
+const event = {}
+event.name = Events.InteractionCreate
 
-module.exports = {
-    name: Events.InteractionCreate,
-    async execute(interaction) {
-        if (interaction.isChatInputCommand() || interaction.isContextMenuCommand()) {
+event.execute = async (interaction) => {
+    switch (interaction.type) {
+        case 2: {
             require('../event_modules/interactionCreate/ChatInputCommand')(interaction);
-            return
+            break;
         }
-        if (interaction.isButton()) {
+
+        case 3: {
             require('../event_modules/interactionCreate/Button')(interaction);
-            return
+            break;
         }
-        if (interaction.isAutocomplete()) {
+        
+        case 4: {
             require('../event_modules/interactionCreate/autocomplete')(interaction);
-            return
+            break;
         }
-    },
-};
+
+        default:
+            break;
+    }
+}
+
+module.exports = event

@@ -43,7 +43,7 @@ exports.newGame = async (interaction, player1, player2) => {
     client.tictactoePlayers.set(player2, { gameId: code, opponent: player1 })
 
     interaction.editReply({ content: `<@${player1}>`, embeds: [embed(":green_circle:", `<@${player1}>'s turn`, client.config.color.colorSuccess)], components: [rowa, rowb, rowc, rowend] })
-        .catch(err => require('./handleError')(interaction, err))
+        .catch(err => interaction.client.handleError(interaction, err))
 }
 
 exports.step = async (interaction) => {
@@ -57,7 +57,7 @@ exports.step = async (interaction) => {
     const _playerTurnId = game.players[game.turn]
     if (_playerId !== _playerTurnId) return interaction.reply({ content: "Its not your turn lah bodo", ephemeral: true })
 
-    interaction.deferUpdate().catch(err => require('./handleError')(interaction, err))//!
+    interaction.deferUpdate().catch(err => interaction.client.handleError(interaction, err))//!
 
     // Update board
     var buttons = game.buttons
@@ -84,13 +84,13 @@ exports.step = async (interaction) => {
     // Check for winner // tie
     const winner = checkWinner(game.board)
     if (checkTie(game) && winner == 0) return game.interaction.edit({ content: "", embeds: [embed("Match results:", "Draw\nNo money given:(", client.config.color.colorWarning)], components: [rowa, rowb, rowc] })
-        .catch(err => require('./handleError')(interaction, err))//!
+        .catch(err => interaction.client.handleError(interaction, err))//!
 
     if (winner == 0) return game.interaction.edit({
         content: "",
         embeds: [embed(game.turn == 0 ? ":green_circle:" : ":red_circle:", `<@${game.players[game.turn]}>'s turn`, client.config.color[game.turn == 0 ? "colorSuccess" : "colorError"])],
         components: [rowa, rowb, rowc, rowend]
-    }).catch(err => require('./handleError')(interaction, err))//!
+    }).catch(err => interaction.client.handleError(interaction, err))//!
 
 
     var respTxt = ""
@@ -107,7 +107,7 @@ exports.step = async (interaction) => {
         content: "",
         embeds: [embed("Match results:", `<@${game.players[winner - 1]}> Won\n${respTxt}`, client.config.color.colorSuccess)],
         components: [rowa, rowb, rowc]
-    }).catch(err => require('./handleError')(interaction, err))//!
+    }).catch(err => interaction.client.handleError(interaction, err))//!
     deleteGame(client, game)
 }
 
@@ -127,7 +127,7 @@ exports.endGame = (interaction) => {
         content: "",
         embeds: [embed("Game ended", `Game ended by <@${_playerId}>`, client.config.color.colorBG)],
         components: [rowa, rowb, rowc]
-    }).catch(err => require('./handleError')(interaction, err))//!
+    }).catch(err => interaction.client.handleError(interaction, err))//!
     deleteGame(client, game)
 }
 

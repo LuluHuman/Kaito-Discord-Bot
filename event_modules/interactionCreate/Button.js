@@ -2,6 +2,7 @@ const akiHandler = require("../../modules/aki")
 // const wait = require('node:timers/promises').setTimeout;
 
 module.exports = async (interaction) => {
+    if (!interaction.isButton()) return
     const client = interaction.client;
 
     switch (interaction.customId) {
@@ -28,17 +29,17 @@ module.exports = async (interaction) => {
         case "randomtnd": {
             if (interaction.customId == "randomtnd") interaction.customId = Math.floor(Math.random() * 2) == 0 ? 'truth' : 'dare'
             require('../../modules/tndapi/truthOrDare')(interaction.customId, interaction)
-            interaction.message.edit({ components: [] }).catch(err => require('../../modules/handleError')(interaction, err))
+            interaction.message.edit({ components: [] }).catch(err => interaction.client.handleError(interaction, err))
             break
         }
         case "wyr": {
             require('../../modules/tndapi/wouldYouRather')(interaction)
-            interaction.message.edit({ components: [] }).catch(err => require('../../modules/handleError')(interaction, err))
+            interaction.message.edit({ components: [] }).catch(err => interaction.client.handleError(interaction, err))
             break
         }
         case "paranoia": {
             require('../../modules/tndapi/paranoia')(interaction)
-            interaction.message.edit({ components: [] }).catch(err => require('../../modules/handleError')(interaction, err))
+            interaction.message.edit({ components: [] }).catch(err => interaction.client.handleError(interaction, err))
             break
         }
 
@@ -48,7 +49,7 @@ module.exports = async (interaction) => {
         case "dkaki":
         case "probaki":
         case "probnotaki": {
-            await interaction.deferUpdate().catch(err => require('../../modules/handleError')(interaction, err))
+            await interaction.deferUpdate().catch(err => interaction.client.handleError(interaction, err))
 
             akiHandler.step(interaction)
             break
@@ -64,7 +65,7 @@ module.exports = async (interaction) => {
         }
 
         case "tttAccept":
-        case "tttDecline": {break}
+        case "tttDecline": { break }
         case "tttaa":
         case "tttab":
         case "tttac":
@@ -89,13 +90,13 @@ module.exports = async (interaction) => {
         case "highlow.jackpot":
         case "highlow.lower":
         case "nexthelp":
-        case "prevhelp":{break}
+        case "prevhelp": { break }
 
 
         default:
             interaction
                 .reply({ content: `There was an error trying to execute that command\n\`No button matching id ${interaction.customId} was found.\`\n<@635303930879803412>` })
-                .catch(err => require('../../modules/handleError')(`No button matching id ${interaction.customId} was found`, err))
+                .catch(err => interaction.client.handleError(`No button matching id ${interaction.customId} was found`, err))
             break;
     }
 
