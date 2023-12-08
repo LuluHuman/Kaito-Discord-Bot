@@ -4,7 +4,7 @@ const command = {}
 command.data = new SlashCommandBuilder().setName('stop').setDescription('Stop Playing')
 command.execute = async (interaction, isButton) => {
   const client = interaction.client;
-  const { embed: { titleEmbed }, noQueue, musicControlls } = client.modules.tttModule
+  const { embed: { titleEmbed }, noQueue, musicControlls } = client.modules.messageHandler
 
   const queue = client.distube.getQueue(interaction.guildId)
   if (noQueue(interaction)) return;

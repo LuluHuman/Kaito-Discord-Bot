@@ -6,7 +6,7 @@ command.data = new SlashCommandBuilder().setName('volume').setDescription('Chang
 
 command.execute = async (interaction) => {
   const client = interaction.client
-  const { embed: { titleEmbed }, musicControlls, noQueue, musicControllsEmbed } = client.modules.tttModule
+  const { embed: { titleEmbed }, musicControlls, noQueue, musicControllsEmbed } = client.modules.messageHandler
   
   const queue = client.distube.getQueue(interaction)
   if (noQueue(interaction)) return;

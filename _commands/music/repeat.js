@@ -12,7 +12,7 @@ command.data = new SlashCommandBuilder().setName('repeat').setDescription('Set t
       ))
 command.execute = async (interaction) => {
   const client = interaction.client
-  const { embed: { titleEmbed }, noQueue, musicControlls, musicControllsEmbed } = client.modules.tttModule
+  const { embed: { titleEmbed }, noQueue, musicControlls, musicControllsEmbed } = client.modules.messageHandler
 
   const queue = client.distube.getQueue(interaction)
   if (noQueue(interaction)) return;

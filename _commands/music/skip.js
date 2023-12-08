@@ -4,13 +4,14 @@ const command = {}
 command.data = new SlashCommandBuilder().setName('skip').setDescription('Skip the current song')
 command.execute = async (interaction, isButton) => {
   const client = interaction.client
-  const { embed: { titleEmbed }, noQueue } = client.modules.tttModule
+  const { embed: { titleEmbed }, noQueue } = client.modules.messageHandler
 
   const queue = client.distube.getQueue(interaction)
   if (noQueue(interaction)) return;
 
   if (!queue.songs[1]) return interaction.reply({ embeds: [titleEmbed(client, "colorError", "error", "no song after this")], ephemeral: true }).catch(err => interaction.client.handleError(interaction, err))
   if (queue.paused) queue.resume().catch(err => interaction.client.handleError(interaction, err))
+
   queue.skip().catch(err => interaction.client.handleError(interaction, err))
   try {
     if (!isButton) { interaction.reply({ embeds: [titleEmbed(client, "colorBG", "success", "Current song was skipped")], ephemeral: true }).catch(err => interaction.client.handleError(interaction, err)) }

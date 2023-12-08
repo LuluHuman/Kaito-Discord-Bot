@@ -14,9 +14,9 @@ event.execute = async (client) => {
     const errorLogs = fs.readFileSync("/home/lulu/.pm2/logs/KaitoBot-error.log", "utf-8")
     const errors = errorLogs.split("\n").filter(ln => !(ln.includes("DeprecationWarning") || ln.includes("node --trace-deprecation")))
     const iErrors = errors.filter(ln => !ln.startsWith("    at"))
-    if (iErrors.length >= 1 && iErrors[0] !== "") {
+    if (iErrors.length >= 2) {
         const general = client.channels.cache.get('1144621437215322194')
-        general.send(`Bot restarted due to  \`${iErrors.length}\` errors\n\`\`\`js\n${errors.join("\n")}\`\`\``)
+        general.send(`Bot restarted due to  \`${iErrors.length-1}\` errors\n\`\`\`js\n${errors.join("\n")}\`\`\``)
     }
     // Clear logs
     fs.writeFileSync("/home/lulu/.pm2/logs/KaitoBot-error.log", "")

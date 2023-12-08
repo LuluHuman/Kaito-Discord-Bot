@@ -13,7 +13,8 @@ command.execute = async (interaction) => {
 
     me.voice.setChannel(fixVc).catch(err => interaction.client.handleError(interaction, err))
     setTimeout(() => { me.voice.setChannel(curVs) }, 1000)
-    interaction.reply({ embeds: [titleEmbed(client, "colorBG", "success", "Fixed")] }).catch(err => interaction.client.handleError(interaction, err))
+    
+    interaction.reply({ embeds: [titleEmbed(client, "colorBG", "success", "Rejoined")] }).catch(err => interaction.client.handleError(interaction, err))
 }
 
 module.exports = command

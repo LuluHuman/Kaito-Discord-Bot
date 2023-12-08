@@ -75,6 +75,7 @@ try {//! Idk what im doing with the try catch here
         const event = require(filePath);
 
         client[event.once ? "once" : "on"](event.name, (...args) => event.execute(...args));
+        console.log(`[INFO] Loaded Discord event ${event.name} from ${filePath}`);
     }
 
     //? Load _distubeEvents
@@ -85,6 +86,7 @@ try {//! Idk what im doing with the try catch here
         const event = require(filePath);
 
         client.distube.on(file.replace(".js", ""), (...args) => event(client, ...args));
+        console.log(`[INFO] Loaded Distube event ${file.replace(".js", "") } from ${filePath}`);
     }
 } catch (error) {console.error(error)}
 

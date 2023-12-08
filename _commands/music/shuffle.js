@@ -3,7 +3,7 @@ const command = {}
 command.data = new SlashCommandBuilder().setName('shuffle').setDescription('shuffle the queue')
 command.execute = async (interaction, isButton) => {
     const client = interaction.client;
-    const { embed: { titleEmbed }, noQueue, musicControlls, musicControllsEmbed } = client.modules.tttModule
+    const { embed: { titleEmbed }, noQueue, musicControlls, musicControllsEmbed } = client.modules.messageHandler
 
     const queue = client.distube.getQueue(interaction.guildId)
     if (noQueue(interaction)) return;

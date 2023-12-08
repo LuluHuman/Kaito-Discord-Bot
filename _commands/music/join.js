@@ -15,6 +15,7 @@ command.execute = async (interaction) => {
   }
 
   client.distube.voices.join(voiceChannel).catch(err => interaction.client.handleError(interaction, err))
+  
   const embed2 = titleEmbed(client, "colorSuccess", "success", 'Joined voice channel')
   interaction.reply({ embeds: [embed2] }).catch(err => interaction.client.handleError(interaction, err))
 }

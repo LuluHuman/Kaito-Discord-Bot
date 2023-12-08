@@ -4,7 +4,7 @@ const command = {}
 command.data = new SlashCommandBuilder().setName('pause').setDescription('Pause the current song')
 command.execute = async (interaction, isButton) => {
   const client = interaction.client
-  const { embed: { queueSnippet }, noQueue, musicControlls, musicControllsEmbed } = client.modules.tttModule
+  const { embed: { queueSnippet }, noQueue, musicControlls, musicControllsEmbed } = client.modules.messageHandler
   
   const queue = client.distube.getQueue(interaction)
 

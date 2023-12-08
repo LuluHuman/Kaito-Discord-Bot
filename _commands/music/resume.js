@@ -4,7 +4,7 @@ const command = {}
 command.data = new SlashCommandBuilder().setName('resume').setDescription('Resume the current song')
 command.execute = async (interaction) => {
   const client = interaction.client
-  const { embed: { queueSnippet }, noQueue, musicControlls, musicControllsEmbed } = client.modules.tttModule
+  const { embed: { queueSnippet }, noQueue, musicControlls, musicControllsEmbed } = client.modules.messageHandler
 
   const queue = client.distube.getQueue(interaction)
   if (noQueue(interaction)) return;

@@ -27,15 +27,34 @@ exports.embed.queueSnippet = function (queue, paused) {
         .setDescription(queue.songs[1] ? `**${queue.songs[1].name}** up next` : 'No more songs in queue')
     return embed
 }
-exports.embed.songinfoEmbed = function ({ source, name, formattedDuration, url, thumbnail, views, likes, uploader, user }, queue, addQueue) {
+exports.embed.songinfoEmbed = function (song, queue, addQueue) {
+    const secondtoEmoji = Math.floor(song.duration / 11)
+    const currentEmojis = Math.floor(queue.currentTime / secondtoEmoji)
+    const trackEmojis = ["<:track_0:1182179759556411483>", "<:track_1:1182179755932516413>", "<:track_3:1182179754531618837>"]
+    var track = ""
+
+    for (let i = 0; i < 11; i++) {
+        if (i < currentEmojis) {
+            track += trackEmojis[0]
+        }
+        if (i == currentEmojis) {
+            track += trackEmojis[1]
+        }
+        if (i > currentEmojis) {
+            track += trackEmojis[2]
+        }
+    }
+
+    const { source, name, formattedDuration, url, thumbnail, views, likes, uploader, user } = song
     const embed = new EmbedBuilder()
         .setColor(source === 'youtube' ? '#FF0000' : '#F26F23')
         .setTitle(`${addQueue ? 'Added song to queue' : 'Now Playing'}: ${name}`)
         .setDescription(
             `Requested by: ${user}\n\n` +
-            `⏳ ${formattedDuration} / ${queue.formattedCurrentTime}\n` +
             `🔉 ${queue.volume}%  |  🔁 ${queue.repeatMode ? (queue.repeatMode === 2 ? 'All Queue' : 'This Song') : 'Off'}`
         )
+        .addFields(
+            { name: `${formattedDuration} / ${queue.formattedCurrentTime}`, value: `${track}`, inline: false })
         .setURL(url)
         .setAuthor({ name: uploader.name, url: uploader.url })
         .setImage(thumbnail)
@@ -79,7 +98,6 @@ exports.buttons.createDisabled = (id, label, color) => {
     return Button
 }
 
-
 exports.noQueue = function (interaction) {
     const client = interaction.client;
     const queue = client.distube.getQueue(interaction)
@@ -96,18 +114,45 @@ exports.musicControlls = function (client, embed) {
     messges.then(msg => msg.edit({ embeds: [embed], content: `` }))
 }
 
-exports.musicControllsEmbed = function ({ source, name, formattedDuration, url, thumbnail, uploader, user }, queue) {
+exports.musicControllsEmbed = function (song, queue) {
+    const secondtoEmoji = Math.floor(song.duration / 11)
+    const currentEmojis = Math.floor(queue.currentTime / secondtoEmoji)
+    const trackEmojis = ["<:track_0:1182179759556411483>", "<:track_1:1182179755932516413>", "<:track_3:1182179754531618837>"]
+    var track = ""
+
+    for (let i = 0; i < 11; i++) {
+        if (i < currentEmojis) {
+            track += trackEmojis[0]
+        }
+        if (i == currentEmojis) {
+            track += trackEmojis[1]
+        }
+        if (i > currentEmojis) {
+            track += trackEmojis[2]
+        }
+    }
+    track += `\n ends <t:${Math.floor(Date.now() / 1000) + song.duration}:R>`
+
+    const { source, name, formattedDuration, url, thumbnail, uploader, user } = song
     const embed = new EmbedBuilder()
         .setColor(source === 'youtube' ? '#FF0000' : '#F26F23')
         .setTitle(`Now Playing:\n${name}`)
         .setDescription(
             `Requested by: ${user}\n\n` +
-            `⏳ ${formattedDuration} / ${queue.formattedCurrentTime}\n` +
             `🔉 ${queue.volume}%  |  🔁 ${queue.repeatMode ? (queue.repeatMode === 2 ? 'All Queue' : 'This Song') : 'Off'}`
         )
         .setURL(url)
         .setAuthor({ name: uploader.name, url: uploader.url })
-        .addFields({ name: '📄Up next', value: "* " +( queue.songs[1] ? queue.songs[1].name : 'No more songs in queue'), inline: false })
+        .addFields(
+            { name: `${formattedDuration} / ${queue.formattedCurrentTime}`, value: `${track}`, inline: false },
+            {
+                name: '📄Up next', value:
+                    `* ${queue.songs[1] ? queue.songs[1].name : 'No more songs in queue'}\n`+
+                    `* ${ queue.songs[2] ? queue.songs[2].name : 'No more songs in queue'}\n`+
+                `* ${queue.songs[3] ? queue.songs[3].name : 'No more songs in queue'}\n`
+                , inline: false
+            }
+        )
         .setImage(thumbnail)
         .setTimestamp()
     return embed

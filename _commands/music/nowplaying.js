@@ -4,7 +4,7 @@ const command = {}
 command.data = new SlashCommandBuilder().setName('nowplaying').setDescription('Show the current playing song')
 command.execute = async (interaction) => {
   const client = interaction.client;
-  const { embed: { songinfoEmbed }, noQueue } = client.modules.tttModule
+  const { embed: { songinfoEmbed }, noQueue } = client.modules.messageHandler
   
   const queue = client.distube.getQueue(interaction)
   if (noQueue(interaction)) return;
